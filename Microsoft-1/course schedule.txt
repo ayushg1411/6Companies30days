@@ -1,0 +1,171 @@
+class Solution {
+    public boolean canFinish(int n, int[][] edges) 
+    {
+        List<List<Integer>> graph = create_graph(n , edges);   
+        
+        HashSet<Integer> visited = new HashSet<>();
+        HashSet<Integer> recStack = new HashSet<>();
+        List<Integer> traversal = new ArrayList<>();
+        
+        for(int currentVertex =0; currentVertex < n;currentVertex++)
+        {
+            if(visited.contains(currentVertex))
+                continue;
+            
+            if(is_cyclic(graph , currentVertex, visited , recStack , traversal))
+                return false;
+        }
+        return true;
+    }
+    
+    private boolean is_cyclic(List<List<Integer>> graph , int currentVertex , HashSet<Integer> visited , HashSet<Integer> recStack , List<Integer> traversal)
+    {
+        visited.add(currentVertex);
+        recStack.add(currentVertex);
+        
+        for(Integer neighbour: graph.get(currentVertex))
+        {
+            if(!visited.contains(neighbour))
+            {
+                if(is_cyclic(graph , neighbour , visited , recStack , traversal))
+                    return true;
+            }
+                
+            else if(recStack.contains(neighbour))
+                return true;
+        }
+        
+        traversal.add(currentVertex);
+        recStack.remove(currentVertex);
+        
+        return false;
+    }
+    
+    private List<List<Integer>> create_graph(int n , int[][] edges)
+    {
+        List<List<Integer>> graph = new ArrayList<>(n);
+        
+        for(int i=0; i<n;i++)
+            graph.add(new ArrayList<>());
+        
+        for(int[] edge: edges)
+        {
+            int v = edge[0];
+            int u = edge[1];
+            
+            graph.get(u).add(v);
+        }
+        return graph;
+    }
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class Solution {
+//     public boolean canFinish(int numCourses, int[][] prerequisites) {
+//         //       boolean flag=true;
+            
+
+              
+//         //     int n = prerequisites.length;
+              
+//         //       if(n<=1)
+//         //       return true;
+//         //     int m =  prerequisites[0].length;
+           
+//         // for(int i =0;i<n;i++)
+//         // {
+//         //     ArrayList<Integer> ll= new ArrayList<>();
+//         //     for(int j=0;j<m;j++)
+//         //     {
+//         //         ll.add( prerequisites[i][j]);
+                
+//         //     }
+
+//         //     ArrayList<Integer> ll2= new ArrayList<>(ll);
+//         //     Collections.sort(ll2);
+            
+//         //     flag= ll.equals(ll2);
+//         //     if(flag==false)
+//         //    flag=true;
+//         //    else
+//         //    flag=false;
+//         //    if(flag==false)
+//         //    return false;
+        
+            
+//         // }
+//         //   return flag;
+
+
+//           int n =  prerequisites.length;
+//         ArrayList<Integer>[] G = new ArrayList[n];
+//         int[] degree = new int[n];
+//         ArrayList<Integer> bfs = new ArrayList();
+//         for (int i = 0; i < n; ++i) G[i] = new ArrayList<Integer>();
+//         for (int[] e : prerequisites) {
+//             G[e[1]].add(e[0]);
+//             degree[e[0]]++;
+//         }
+//         for (int i = 0; i < n; ++i) if (degree[i] == 0) bfs.add(i);
+//         for (int i = 0; i < bfs.size(); ++i)
+//             for (int j: G[bfs.get(i)])
+//                 if (--degree[j] == 0) bfs.add(j);
+//         return bfs.size() == n;
+    
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     }
+// }
