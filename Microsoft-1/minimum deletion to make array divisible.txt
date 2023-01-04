@@ -1,0 +1,26 @@
+class Solution {
+
+static  int gcd(int a , int b){
+        if(a==0)
+            return b;
+        return gcd(b%a,a);
+    }
+
+    public int minOperations(int[] nums, int[] numsd) {
+         int x=numsd[0];
+      for(int i=1;i< numsd.length;i++)
+      {
+          x=gcd(x, numsd[i]);
+      }
+
+  
+      Arrays.sort(nums);
+
+    for (int i = 0; i < nums.length; i++) {
+        if(x%nums[i]==0)
+           return i;
+    }
+   return -1;
+
+    }
+}
